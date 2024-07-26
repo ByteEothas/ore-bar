@@ -1,5 +1,5 @@
 use crate::consts::SHOW_RPC_URL_MAX_LENGTH;
-use crate::miner::{Config, Configs};
+use crate::miner::Configs;
 use cached::proc_macro::cached;
 use chrono::{Local, TimeZone};
 use iced::Theme;
@@ -108,16 +108,6 @@ pub fn load_config(file_path: &str) -> Result<Configs, Box<dyn std::error::Error
     Ok(configs)
 }
 
-pub fn append_config(config: Config, file_path: &str) -> Result<(), Box<dyn std::error::Error>> {
-    let mut configs = load_config(file_path)?;
-    configs.configs.push(config);
-
-    let toml_string = toml::to_string(&configs)?;
-    let mut file = File::create(file_path)?;
-    file.write_all(toml_string.as_bytes())?;
-    Ok(())
-}
-
 pub fn is_valid_path(file_path: &str) -> bool {
     let path = Path::new(file_path);
     if path.exists() {
@@ -151,7 +141,6 @@ pub fn get_theme(name: &str) -> Theme {
         "Moonfly" => Theme::Moonfly,
         "Nightfly" => Theme::Nightfly,
         "Oxocarbon" => Theme::Oxocarbon,
-        "Ferra" => Theme::Ferra,
         _ => Theme::Light,
     }
 }
