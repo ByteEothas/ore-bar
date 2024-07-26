@@ -1,6 +1,9 @@
 [package]
 name = "ore-bar"
 version = "1.0.0-alpha.1"
+description = "A UI tool for ORE designed to easily monitor status, claim, and stake ORE."
+license = "MIT"
+repository = "https://github.com/ByteEothas/ore-bar.git"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
