@@ -1,0 +1,32 @@
+[package]
+name = "ore-bar"
+version = "1.0.0-alpha.1"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+dirs = "5.0"
+url = "2.5.2"
+iced = { git = "https://github.com/iced-rs/iced", rev="c851e67734ec0c761adfd7881c576856ea38734b", features = ["advanced","svg", "canvas", "highlighter", "tokio", "debug"] }
+lyon_algorithms = "1.0"
+once_cell = "1.0"
+copypasta = "0.10.1"
+ore-api = "2.0.0-beta.3"
+ore-utils = "2.0.0-beta.2"
+cached = "0.46.1"
+tokio = "1.35.1"
+toml = "0.8.13"
+chrono = "0.4.38"
+chrono-tz = "0.9.0"
+rfd = "0.13"
+reqwest = {version="0.11.3", default-features = false, features = ["json", "rustls-tls"]}
+serde = { version = "1.0", features = ["derive"] }
+solana-cli-config = "^1.18"
+solana-client = "^1.18"
+solana-program = "^1.18"
+solana-rpc-client = "^1.18"
+solana-sdk = "^1.18"
+solana-transaction-status = "^1.18"
+spl-token = { version = "^4", features = ["no-entrypoint"] }
+spl-associated-token-account = { version = "^2.2", features = [ "no-entrypoint" ] }
