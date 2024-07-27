@@ -24,11 +24,8 @@ use crate::{
 use iced::event::{self};
 use iced::{Element, Subscription, Theme};
 use price::CoinGecko;
-use serde::Deserialize;
-use std::fs::{self};
 use std::path::PathBuf;
 use std::sync::Arc;
-use toml;
 
 fn main() -> iced::Result {
     iced::application(Dashboard::title, Dashboard::update, Dashboard::view)
@@ -38,17 +35,6 @@ fn main() -> iced::Result {
         .subscription(Dashboard::subscription)
         .run_with(Dashboard::load)
 }
-
-#[derive(Debug, Deserialize)]
-struct CargoToml {
-    package: Package,
-}
-
-#[derive(Debug, Deserialize)]
-struct Package {
-    version: String,
-}
-
 struct Dashboard {
     modal_view: fn(&Dashboard) -> Element<Message>,
     show_modal: ModalType,
@@ -115,11 +101,6 @@ struct Dialog {
 
 impl Dashboard {
     fn init() -> Self {
-        let cargo_toml_content =
-            fs::read_to_string("Cargo.toml").expect("Failed to read Cargo.toml");
-        let cargo_toml: CargoToml =
-            toml::from_str(&cargo_toml_content).expect("Failed to parse Cargo.toml");
-
         // Set the default keypair path based on the user's home directory
         let mut default_keypair_path = PathBuf::new();
         if let Some(home_path) = dirs::home_dir() {
@@ -178,7 +159,7 @@ impl Dashboard {
             claim_address: String::default(),
             claim_amount: String::default(),
             stake_amount: String::default(),
-            version: cargo_toml.package.version,
+            version: env!("CARGO_PKG_VERSION").to_string(),
             dialog: Dialog::default(),
             price_client: Arc::new(CoinGecko::default()),
             price_usd: 0.0,
