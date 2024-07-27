@@ -37,25 +37,12 @@ use iced::{window, Application, Command, Element, Length, Padding, Settings, Sub
 use ore_api::consts::MINT_ADDRESS;
 use price::CoinGecko;
 use rfd::FileDialog;
-use serde::Deserialize;
 use solana_sdk::signer::Signer;
-use std::fs::{self};
 use std::path::PathBuf;
 use std::sync::Arc;
-use toml;
 
 fn main() -> iced::Result {
     Dashboard::run(Settings::default())
-}
-
-#[derive(Debug, Deserialize)]
-struct CargoToml {
-    package: Package,
-}
-
-#[derive(Debug, Deserialize)]
-struct Package {
-    version: String,
 }
 
 struct Dashboard {
