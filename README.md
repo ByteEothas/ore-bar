@@ -1,4 +1,4 @@
-![Home](https://gist.githubusercontent.com/ByteEothas/f3e13d616d3d215451e17c110f6590c2/raw/d47294c11bdb04a41ef98ec7cd84b26dbbd9a411/home.png)
+![Home](https://gist.githubusercontent.com/ByteEothas/96ec92e42a82099c1f769e4b5da82988/raw/91b81fd871ff224f44219f4f181ad39cfbc03d88/home.png)
 
 # ORE BAR
 
@@ -45,3 +45,7 @@ To stake your ORE, click the Stake button on the content panel and enter the amo
 ```sh
 sudo apt-get install libgtk-3-dev
 ```
+
+### ERROR Insufficient balance
+
+The [ORE](https://github.com/regolith-labs/ore) request requires a minimum balance of 0.005 SOL.
