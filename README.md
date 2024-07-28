@@ -10,14 +10,6 @@ Ore Bar is developed using [Iced](https://github.com/iced-rs/iced), a cross-plat
 * Claim
 * Stake
 
-## Install
-
-## Run
-
-```sh
-ore-bar
-```
-
 ## Build
 
 ```sh
@@ -25,6 +17,24 @@ git clone https://github.com/ByteEothas/ore-bar.git
 cd ore-bar
 cargo run
 ```
+
+## Usage
+
+### Import Your Miner's Keypair
+
+To begin, click the Add an Account button on the left panel. Enter your preferred RPC URL, select your keypair file, and specify the gas fee for transactions related to claiming or staking.
+
+### Monitor Your Miner Account Status
+
+You can keep track of each imported account's status, including balance, stake, and the last active time. When a miner account is online, a green indicator appears in the top right corner; if the account is offline, the indicator turns red.
+
+### Claim Your ORE
+
+To claim ORE, click the Claim button on the content panel. Enter the wallet address where you want to receive the ORE. ORE-BAR will automatically convert the wallet address into the associated token address, so you don't need to provide the token address separately. If the inputted address does not have an associated token address, ORE-BAR will create one by initiating a transaction on Solana. By default, if no address is specified, the current account's address is used. Specify the amount of ORE you wish to claim; if left blank, the maximum available amount will be claimed.
+
+### Stake Your ORE
+
+To stake your ORE, click the Stake button on the content panel and enter the amount you wish to stake. Currently, ORE can only be staked to the account from which it originates, so you cannot specify a different wallet address for staking; the staking will be done to your current account.
 
 ## FAQ
 
