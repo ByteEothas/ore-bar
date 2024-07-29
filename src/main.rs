@@ -9,6 +9,7 @@ mod miner;
 mod price;
 mod send_and_confirm;
 mod stake;
+mod style;
 mod utils;
 mod views;
 
@@ -31,9 +32,12 @@ use crate::{
 };
 use iced::event::{self, Event};
 use iced::executor;
+use iced::theme;
 use iced::widget::{self};
-use iced::widget::{button, checkbox, column, pick_list, row, text, vertical_space};
-use iced::{window, Application, Command, Element, Length, Padding, Settings, Subscription, Theme};
+use iced::widget::{button, checkbox, column, container, pick_list, row, text, vertical_space};
+use iced::{
+    window, Application, Command, Element, Length, Padding, Settings, Size, Subscription, Theme,
+};
 use ore_api::consts::MINT_ADDRESS;
 use price::CoinGecko;
 use rfd::FileDialog;
@@ -42,7 +46,13 @@ use std::path::PathBuf;
 use std::sync::Arc;
 
 fn main() -> iced::Result {
-    Dashboard::run(Settings::default())
+    Dashboard::run(Settings {
+        window: window::Settings {
+            size: Size::new(WINDOW_SIZE.0, WINDOW_SIZE.1),
+            ..window::Settings::default()
+        },
+        ..Settings::default()
+    })
 }
 
 struct Dashboard {
@@ -530,9 +540,11 @@ impl Application for Dashboard {
 
     fn view(&self) -> Element<Message> {
         let refresh_button = if !self.is_refreshed {
-            button(get_svg_icon("refresh", 24, 24)).on_press(Message::Refresh)
+            button(get_svg_icon("refresh", 24, 24))
+                .on_press(Message::Refresh)
+                .style(theme::Button::Text)
         } else {
-            button(get_svg_icon("refresh-disabled", 24, 24))
+            button(get_svg_icon("refresh-disabled", 24, 24)).style(theme::Button::Text)
         };
 
         let left = column![
@@ -553,15 +565,11 @@ impl Application for Dashboard {
                         text(&self.balance),
                         text(format!("${}", &self.balance_usd)).size(SUBHEAD_TEXT)
                     ]
-                    .height(MENU_SPAN_HEIGHT)
-                    .width(Length::Fill)
                     .align_items(iced::Alignment::End),
                     column![
                         text(&self.stake),
                         text(format!("${}", &self.stake_usd)).size(SUBHEAD_TEXT)
                     ]
-                    .height(MENU_SPAN_HEIGHT)
-                    .width(Length::Fill)
                     .align_items(iced::Alignment::End),
                     active_num_view(&self),
                     text(abbreviate(&MINT_ADDRESS.to_string()))
@@ -602,7 +610,11 @@ impl Application for Dashboard {
         let content = get_content_list(self);
         let body = row![left.width(250), content];
         match &self.show_modal {
-            ModalType::Sub => Modal::new(body, (self.modal_view)(&self)).into(),
+            ModalType::Sub => Modal::new(
+                body,
+                container((self.modal_view)(&self)).style(theme::Container::Box),
+            )
+            .into(),
             _ => body.into(),
         }
     }

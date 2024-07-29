@@ -1,7 +1,7 @@
 use crate::{
     circular::Circular,
     consts::{ACCOUNT_DETAIL_HIGHT, ACCOUNT_DETAIL_WIDTH, MAX_ITEMS_PER_ROW, SUBHEAD_TEXT},
-    easing,
+    easing, style,
     utils::{abbreviate, get_domain},
     Account, ContentType, Dashboard, Message,
 };
@@ -9,7 +9,7 @@ use iced::widget::{
     button, column, container, horizontal_space, row, scrollable, svg, text, text_input,
     vertical_space, Column, Row,
 };
-use iced::{Element, Length};
+use iced::{theme, Element, Length};
 use std::time::Duration;
 
 pub fn get_svg<'a>(is_online: bool) -> Element<'a, Message> {
@@ -47,7 +47,8 @@ pub fn get_content_list<'a>(dashboard: &'a Dashboard) -> Element<'a, Message> {
         rows = rows.push(
             container(get_content2(i, &a))
                 .width(ACCOUNT_DETAIL_WIDTH)
-                .height(ACCOUNT_DETAIL_HIGHT),
+                .height(ACCOUNT_DETAIL_HIGHT)
+                .style(style::rounded_box),
         );
         count += 1;
     }
@@ -112,7 +113,9 @@ pub fn get_content2<'a>(index: usize, account: &'a Account) -> Element<'a, Messa
             .spacing(5),
             vertical_space(),
             column![row![
-                button("Claim").on_press(Message::SetModalView(Some(index), claim_view)),
+                button("Claim")
+                    .on_press(Message::SetModalView(Some(index), claim_view))
+                    .style(theme::Button::Positive),
                 button("Stake").on_press(Message::SetModalView(Some(index), stake_view)),
                 button("Remove").on_press(Message::SetModalView(Some(index), remove_account_view)),
             ]
@@ -368,6 +371,7 @@ pub fn dialog_view<'a>(dashboard: &Dashboard) -> Element<'a, Message> {
     )
     .width(300)
     .padding(10)
+    .style(style::rounded_box)
     .into()
 }
 
