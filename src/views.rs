@@ -46,15 +46,11 @@ impl Dashboard {
                         text(&self.balance),
                         text(format!("${}", &self.balance_usd)).size(SUBHEAD_TEXT)
                     ]
-                    .height(MENU_SPAN_HEIGHT)
-                    .width(Length::Fill)
                     .align_x(iced::Alignment::End),
                     column![
                         text(&self.stake),
                         text(format!("${}", &self.stake_usd)).size(SUBHEAD_TEXT)
                     ]
-                    .height(MENU_SPAN_HEIGHT)
-                    .width(Length::Fill)
                     .align_x(iced::Alignment::End),
                     active_num_view(&self),
                     text(abbreviate(&MINT_ADDRESS.to_string()))
