@@ -13,7 +13,7 @@ Ore Bar is developed using [Iced](https://github.com/iced-rs/iced), a cross-plat
 ## Install
 
 ```sh
-cargo install ore-bar@0.0.7-alpha.5
+cargo install ore-bar@0.0.7-alpha.6
 ```
 
 
