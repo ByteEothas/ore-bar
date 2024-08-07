@@ -1,6 +1,6 @@
 [package]
 name = "ore-bar"
-version = "0.0.7-alpha.6"
+version = "0.0.7-alpha.7"
 description = "A UI tool for ORE designed to easily monitor status, claim, and stake ORE."
 license = "MIT"
 repository = "https://github.com/ByteEothas/ore-bar.git"

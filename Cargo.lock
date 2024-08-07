@@ -3986,7 +3986,7 @@ dependencies = [
 
 [[package]]
 name = "ore-bar"
-version = "0.0.7-alpha.6"
+version = "0.0.7-alpha.7"
 dependencies = [
  "cached",
  "chrono",
