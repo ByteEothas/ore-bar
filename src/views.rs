@@ -77,15 +77,27 @@ pub fn get_content2<'a>(index: usize, account: &'a Account) -> Element<'a, Messa
     }
     if status.is_valid {
         column![
-            row![
-                text("Account:"),
-                text(abbreviate(&status.authority.to_string())),
-                horizontal_space(),
-                get_svg(status.is_online),
-            ]
-            .spacing(5),
+            container(
+                row![
+                    text("Account:"),
+                    text(abbreviate(&status.authority.to_string())),
+                    horizontal_space(),
+                    get_svg(status.is_online),
+                ]
+                .spacing(5)
+            )
+            .style(if status.is_online {
+                style::rounded_box
+            } else {
+                style::warn_box
+            }),
             row![text("Balance:"), text(&status.balance)].spacing(5),
             row![text("Stake:"), text(&status.stake)].spacing(5),
+            row![
+                text("SOL: ").size(SUBHEAD_TEXT),
+                text(&status.sol_balance).size(SUBHEAD_TEXT)
+            ]
+            .spacing(5),
             row![
                 text("Last hash time: ").size(SUBHEAD_TEXT),
                 text(&status.last_hash_at).size(SUBHEAD_TEXT)
@@ -346,10 +358,7 @@ pub fn active_num_view<'a>(dashboard: &'a Dashboard) -> Element<'a, Message> {
     for _ in 0..all_num - active_num {
         row = row.push(get_svg(false));
     }
-    row.align_items(iced::Alignment::Center)
-        .height(21)
-        .spacing(1)
-        .into()
+    row.spacing(1).into()
 }
 
 pub fn dialog_view<'a>(dashboard: &Dashboard) -> Element<'a, Message> {

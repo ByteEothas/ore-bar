@@ -5,7 +5,7 @@ use crate::{
 };
 use chrono::{Local, TimeZone};
 use ore_api::consts::MINT_ADDRESS;
-use solana_program::pubkey::Pubkey;
+use solana_program::{native_token::lamports_to_sol, pubkey::Pubkey};
 use solana_sdk::signature::Signer;
 use std::str::FromStr;
 
@@ -34,6 +34,8 @@ pub struct MinerStatus {
     pub total_hashes: u64,
     /// The total lifetime rewards distributed to this miner.
     pub total_rewards: u64,
+    /// The balance of SOL
+    pub sol_balance: f64,
 }
 
 impl Miner {
@@ -63,6 +65,16 @@ impl Miner {
             }
         };
 
+        // Get sol balance
+        //if let Ok(Some(balance:u64)) = &self.rpc_client.get_balance(&address).await {balance} else {0.0};
+        let sol_balance = lamports_to_sol(
+            *&self
+                .rpc_client
+                .get_balance(&address)
+                .await
+                .unwrap_or_default(),
+        );
+
         // Get the associated token account balance
         let token_account_address =
             spl_associated_token_account::get_associated_token_address(&address, &MINT_ADDRESS);
@@ -90,6 +102,7 @@ impl Miner {
             last_stake_at: get_local_time(proof.last_stake_at),
             total_hashes: proof.total_hashes,
             total_rewards: proof.total_rewards,
+            sol_balance,
         }
     }
 }

@@ -18,8 +18,9 @@ use crate::stake::StakeParams;
 use crate::{
     balance::MinerStatus,
     consts::{
-        ACCOUNT_DETAIL_WIDTH, MENU_CATEGORY_SPACING, MENU_ITEM_INDENT, MENU_ITEM_SPACING,
-        MENU_SPAN_HEIGHT, SOLANA_DEFAULT_KEYPAIR, SUBHEAD_TEXT, USER_CONFIG_FILE, WINDOW_SIZE,
+        ACCOUNT_DETAIL_WIDTH, FETCH_INTERVAL_SECOND, MENU_CATEGORY_SPACING, MENU_ITEM_INDENT,
+        MENU_ITEM_SPACING, MENU_SPAN_HEIGHT, MENU_STATUS_HEIGHT, SAVE_INTERVAL_SECOND,
+        SOLANA_DEFAULT_KEYPAIR, SUBHEAD_TEXT, USER_CONFIG_FILE, WINDOW_SIZE,
     },
     logic::{
         create_account, format_accounts_data, get_accounts_summary, request_claim, request_stake,
@@ -165,8 +166,8 @@ impl Application for Dashboard {
                 is_stake_process: false,
                 fetch_mode: FetchMode::Parallel,
                 fetch_count: 0,
-                data_interval: 60,
-                save_interval: 5,
+                data_interval: FETCH_INTERVAL_SECOND,
+                save_interval: SAVE_INTERVAL_SECOND,
                 is_saved: true,
                 configs: user_configs,
                 json_rpc_url: "https://api.devnet.solana.com".to_string(),
@@ -571,7 +572,7 @@ impl Application for Dashboard {
                         text(format!("${}", &self.stake_usd)).size(SUBHEAD_TEXT)
                     ]
                     .align_items(iced::Alignment::End),
-                    active_num_view(&self),
+                    container(active_num_view(&self)).height(MENU_STATUS_HEIGHT),
                     text(abbreviate(&MINT_ADDRESS.to_string()))
                 ]
                 .align_items(iced::Alignment::End)
